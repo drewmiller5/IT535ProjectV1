@@ -1,4 +1,15 @@
 #!/bin/bash
 
-echo $d': Inserting test users...' 
-mysql < DatabaseSample.sql 2>&1 
+echo 'Resetting database...'
+mysql < DatabaseSetup.sql 
+
+echo 'Inserting base users...'
+mysql < BaseUsers.sql 
+
+echo 'Generating random users (Python)...'
+python UserGenerate.py 
+
+echo 'Inserting generated users...'
+mysql < InsertUsers.sql 
+
+echo 'Done.'

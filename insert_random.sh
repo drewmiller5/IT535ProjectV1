@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#!/bin/bash
-
 echo 'Resetting database...'
 mysql < Database/DatabaseSetup.sql
 

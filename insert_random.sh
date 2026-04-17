@@ -12,6 +12,9 @@ python Database/UserGenerate.py
 echo 'Inserting generated users...'
 mysql < Database/InsertUsers.sql
 
+echo 'Encrypting passwords...'
+python Encryption/Encrypt.py
+
 echo 'Running password analysis...'
 python Analysis/analyze.py
 

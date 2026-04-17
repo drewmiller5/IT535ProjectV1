@@ -7,7 +7,6 @@ DB_CONFIG = {
     'user': 'root',
     'password': 'root',
     'database': 'user_system'
-    # 'port': 8889  # uncomment if using MAMP on port 8889
 }
 
 # -------------------------

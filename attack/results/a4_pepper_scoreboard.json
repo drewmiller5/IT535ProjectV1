@@ -1,0 +1,78 @@
+{
+  "tried": [
+    "",
+    "changeme",
+    "ch@ng3m3",
+    "pepper123",
+    "s3cr3t",
+    "defaultpepper",
+    "p3pp3r",
+    "supersecret",
+    "ch@ng3m3inPr0d!",
+    "pepper",
+    "secret",
+    "mysecret"
+  ],
+  "scores": {
+    "": {
+      "hits": 0,
+      "runs": 1,
+      "dead_runs": 1
+    },
+    "pepper": {
+      "hits": 0,
+      "runs": 1,
+      "dead_runs": 1
+    },
+    "secret": {
+      "hits": 0,
+      "runs": 1,
+      "dead_runs": 1
+    },
+    "pepper123": {
+      "hits": 0,
+      "runs": 1,
+      "dead_runs": 1
+    },
+    "mysecret": {
+      "hits": 0,
+      "runs": 1,
+      "dead_runs": 1
+    },
+    "changeme": {
+      "hits": 0,
+      "runs": 1,
+      "dead_runs": 1
+    },
+    "ch@ng3m3": {
+      "hits": 0,
+      "runs": 1,
+      "dead_runs": 1
+    },
+    "supersecret": {
+      "hits": 0,
+      "runs": 1,
+      "dead_runs": 1
+    },
+    "p3pp3r": {
+      "hits": 0,
+      "runs": 1,
+      "dead_runs": 1
+    },
+    "s3cr3t": {
+      "hits": 0,
+      "runs": 1,
+      "dead_runs": 1
+    },
+    "defaultpepper": {
+      "hits": 0,
+      "runs": 1,
+      "dead_runs": 1
+    },
+    "ch@ng3m3inPr0d!": {
+      "hits": 0,
+      "runs": 1,
+      "dead_runs": 1
+    }
+  }
+}

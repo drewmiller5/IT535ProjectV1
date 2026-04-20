@@ -1,0 +1,13 @@
+============================================================
+  ATTACK 2 — Brute Force Results
+  Date      : 2026-04-20 11:25:47
+  Charset   : abcdefghijklmnopqrstuvwxyz0123456789
+  Max Len   : 4
+  Time Limit: 30s per user per length
+  Cracked   : 0 / 93
+  Attempts  : 13,906
+  Time      : 39.58s
+  Speed     : 351.3 attempts/sec
+============================================================
+
+No passwords cracked.

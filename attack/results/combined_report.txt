@@ -1,0 +1,76 @@
+======================================================================
+  COMBINED ATTACK REPORT — Dictionary + Brute Force + Rainbow Table + Pepper Guessing
+  Generated     : 2026-04-20 11:25:47
+  Total Cracked : 7
+  Total Attempts: 23,805
+======================================================================
+
+----------------------------------------------------------------------
+  ATTACK 1 — Dictionary Attack Summary
+----------------------------------------------------------------------
+  Date     : 2026-04-20 11:25:01
+  Cracked  : 7 / 100
+  Attempts : 9899
+  Time     : 32.81s
+
+----------------------------------------------------------------------
+  ATTACK 2 — Brute Force Summary
+----------------------------------------------------------------------
+  Date       : 2026-04-20 11:25:47
+  Charset    : abcdefghijklmnopqrstuvwxyz0123456789
+  Max Length : 4
+  Time Limit : 30s per user per length
+  Cracked    : 0 / 93
+  Attempts   : 13,906
+  Time       : 39.58s
+  Speed      : 351.3 attempts/sec
+
+
+----------------------------------------------------------------------
+  Date     : 2026-04-20 11:26:49
+  Cracked  : 0 / 93
+  Attempts : 93
+  Time     : 0.0000s
+
+----------------------------------------------------------------------
+  Date     : 2026-04-20 11:26:05
+  Cracked  : 0 / 93
+  Attempts : 93
+  Time     : 0.0000s
+
+----------------------------------------------------------------------
+  Date     : 2026-04-20 12:05:37
+  Cracked  : 0 / 93
+  Attempts : 118296
+  Time     : 54.8034s
+
+----------------------------------------------------------------------
+  Date     : 2026-04-20 11:47:04
+  Cracked  : 0 / 93
+  Attempts : 118296
+  Time     : 387.6025s
+
+======================================================================
+  ALL CRACKED PASSWORDS
+======================================================================
+  Username                       Password             Method
+  ------------------------------------------------------------------
+  jim_garcia                     password             Dictionary (A1)
+  kmartin                        qwerty               Dictionary (A1)
+  livgarcia                      abc123               Dictionary (A1)
+  mikey_brown1                   password             Dictionary (A1)
+  sophia_smith                   password             Dictionary (A1)
+  williamlee                     abc123               Dictionary (A1)
+  xander_brennan                 abc123               Dictionary (A1)
+
+======================================================================
+  KEY FINDINGS
+  • Pepper guessing cracked accounts only when the correct pepper was found — a leaked pepper breaks the security model entirely.
+  • Rainbow table attack cracked 0 accounts due to bcrypt salting.
+======================================================================
+  • Dictionary attack cracked 7 account(s) using common passwords.
+  • Brute force cracked 0 additional account(s).
+  • Total compromised: 7 account(s).
+  • bcrypt slows brute force significantly — weak passwords are still at risk.
+  • Adding a pepper (Attack 4) stops both attacks entirely.
+======================================================================

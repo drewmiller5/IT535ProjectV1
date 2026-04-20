@@ -7,7 +7,6 @@ DB_CONFIG = {
     'user': 'root',
     'password': 'root',
     'database': 'user_system'
-    # 'port': 8889
 }
 
 PEPPER = "ch@ng3m3inPr0d!"

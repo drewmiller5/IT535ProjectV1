@@ -1,0 +1,10 @@
+============================================================
+ATTACK 4 — Pepper Guessing
+Date     : 2026-04-20 12:05:37
+Cracked  : 0
+Attempts : 118296
+Time     : 54.8034s
+============================================================
+
+No passwords cracked.
+Reason: Correct pepper was not in the guess list.

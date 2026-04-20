@@ -23,7 +23,6 @@ DB_CONFIG = {
     'user':     'root',
     'password': 'root',
     'database': 'user_system'
-    # 'port': 8889
 }
 
 SCRIPT_DIR    = os.path.dirname(os.path.abspath(__file__))

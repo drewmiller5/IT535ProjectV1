@@ -1,0 +1,10 @@
+============================================================
+ATTACK 3 — Rainbow Table
+Date     : 2026-04-20 11:26:49
+Cracked  : 0
+Attempts : 93
+Time     : 0.0000s
+============================================================
+
+No passwords cracked.
+Reason: bcrypt uses per-user salts, making rainbow tables ineffective.

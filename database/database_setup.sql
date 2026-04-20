@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `username` VARCHAR(50) UNIQUE NOT NULL,
   `password` VARCHAR(255) NOT NULL,
   `encrypted_password` VARCHAR(255),
+  `encrypted_nopep` VARCHAR(255),
   PRIMARY KEY (`userid`)
 ) ENGINE=InnoDB;
 

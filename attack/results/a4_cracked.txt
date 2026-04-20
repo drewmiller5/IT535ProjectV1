@@ -1,10 +1,11 @@
 ============================================================
 ATTACK 4 — Pepper Guessing
-Date     : 2026-04-20 12:05:37
+Date     : 2026-04-20 18:50:16
+Pepper   : 'ch@ng3m3inPr0d!'
 Cracked  : 0
-Attempts : 118296
-Time     : 54.8034s
+Attempts : 20
+Time     : 95.6994s
 ============================================================
 
 No passwords cracked.
-Reason: Correct pepper was not in the guess list.
+Reason: Pepper 'ch@ng3m3inPr0d!' found but no passwords matched wordlist.

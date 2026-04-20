@@ -1,0 +1,18 @@
+============================================================
+ATTACK 6 — Pepper Decryption + Hybrid
+Date       : 2026-04-20 19:06:54
+Pepper     : 'ch@ng3m3inPr0d!'
+Budget     : 180s  (used 158.3s)
+Phases     : P1=30s  P2=120s  P3=30s
+Cracked    : 0 / 93
+Failed     : 93 / 93
+Attempts   : 318,339
+Time       : 158.32s
+By phase   :
+  DICT       : 0
+  HYBRID     : 0
+  MASK       : 0
+============================================================
+
+No additional passwords cracked.
+Reason: Remaining passwords not matched by any phase.

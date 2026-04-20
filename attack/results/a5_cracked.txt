@@ -1,0 +1,11 @@
+============================================================
+  ATTACK 5 — Credential Stuffing Results
+  Date      : 2026-04-20 18:17:58
+  Cracked   : 0 / 93
+  Failed    : 93 / 93
+  Attempts  : 744
+  Time      : 0.5912s
+============================================================
+
+No passwords cracked.
+Reason: No users shared a password with previously cracked accounts.

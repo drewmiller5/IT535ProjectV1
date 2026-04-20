@@ -1,76 +1,77 @@
 ======================================================================
-  COMBINED ATTACK REPORT — Dictionary + Brute Force + Rainbow Table + Pepper Guessing
-  Generated     : 2026-04-20 11:25:47
-  Total Cracked : 7
-  Total Attempts: 23,805
+  COMBINED ATTACK REPORT — Dictionary + Brute Force + Rainbow Table + Pepper Guess + Credential Stuffing + Pepper Decrypt
+  Generated : 2026-04-20 18:17:58
 ======================================================================
 
+ATTACK SUMMARY
 ----------------------------------------------------------------------
-  ATTACK 1 — Dictionary Attack Summary
-----------------------------------------------------------------------
-  Date     : 2026-04-20 11:25:01
-  Cracked  : 7 / 100
-  Attempts : 9899
-  Time     : 32.81s
+  Attack 1 — Dictionary
+    Cracked  : 7 / 100
+    Attempts : 10,100
+    Time     : 4.78s
+
+  Attack 2 — Brute Force
+    Cracked  : 0 / 93
+    Attempts : 8,796
+    Time     : 48.84s
+
+  Attack 3 — Rainbow Table
+    Cracked  : 0 / N/A
+    Attempts : 93
+    Time     : 0.0000s
+
+  Attack 4 — Pepper Guess
+    Cracked  : 0 / N/A
+    Attempts : 20
+    Time     : 54.2500s
+
+  Attack 5 — Credential Stuffing
+    Cracked  : 0 / 93
+    Attempts : 744
+    Time     : 0.5912s
+
+  Total Attempts: 0
+  Total Cracked : 7 unique users
 
 ----------------------------------------------------------------------
-  ATTACK 2 — Brute Force Summary
-----------------------------------------------------------------------
-  Date       : 2026-04-20 11:25:47
-  Charset    : abcdefghijklmnopqrstuvwxyz0123456789
-  Max Length : 4
-  Time Limit : 30s per user per length
-  Cracked    : 0 / 93
-  Attempts   : 13,906
-  Time       : 39.58s
-  Speed      : 351.3 attempts/sec
-
-
-----------------------------------------------------------------------
-  Date     : 2026-04-20 11:26:49
+  Date     : 2026-04-20 19:06:54
+  Pepper   : 'ch@ng3m3inPr0d!'
+  Budget   : 180s  (P1=30s / P2=120s / P3=30s)
   Cracked  : 0 / 93
-  Attempts : 93
-  Time     : 0.0000s
+  Attempts : 318,339
+  Time     : 158.32s
+  By phase : DICT=0  HYBRID=0  MASK=0
 
 ----------------------------------------------------------------------
-  Date     : 2026-04-20 11:26:05
+  Date     : 2026-04-20 19:00:15
+  Pepper   : 'ch@ng3m3inPr0d!'
+  Budget   : 180s
   Cracked  : 0 / 93
-  Attempts : 93
-  Time     : 0.0000s
-
-----------------------------------------------------------------------
-  Date     : 2026-04-20 12:05:37
-  Cracked  : 0 / 93
-  Attempts : 118296
-  Time     : 54.8034s
-
-----------------------------------------------------------------------
-  Date     : 2026-04-20 11:47:04
-  Cracked  : 0 / 93
-  Attempts : 118296
-  Time     : 387.6025s
+  Attempts : 274,071
+  Time     : 180.08s
+  By phase : DICT=0  HYBRID=0  MASK=0
 
 ======================================================================
   ALL CRACKED PASSWORDS
 ======================================================================
-  Username                       Password             Method
+  Username                       Password                  Cracked By
   ------------------------------------------------------------------
-  jim_garcia                     password             Dictionary (A1)
-  kmartin                        qwerty               Dictionary (A1)
-  livgarcia                      abc123               Dictionary (A1)
-  mikey_brown1                   password             Dictionary (A1)
-  sophia_smith                   password             Dictionary (A1)
-  williamlee                     abc123               Dictionary (A1)
-  xander_brennan                 abc123               Dictionary (A1)
+  jim_garcia                     password                  Attack 1 — Dictionary
+  kmartin                        qwerty                    Attack 1 — Dictionary
+  livgarcia                      abc123                    Attack 1 — Dictionary
+  mikey_brown1                   password                  Attack 1 — Dictionary
+  sophia_smith                   password                  Attack 1 — Dictionary
+  williamlee                     abc123                    Attack 1 — Dictionary
+  xander_brennan                 abc123                    Attack 1 — Dictionary
 
 ======================================================================
   KEY FINDINGS
-  • Pepper guessing cracked accounts only when the correct pepper was found — a leaked pepper breaks the security model entirely.
-  • Rainbow table attack cracked 0 accounts due to bcrypt salting.
+  • With the pepper known, bcrypt+pepper collapses to bcrypt alone — hybrid attacks expose medium passwords as disguised dictionary words.
 ======================================================================
-  • Dictionary attack cracked 7 account(s) using common passwords.
-  • Brute force cracked 0 additional account(s).
-  • Total compromised: 7 account(s).
-  • bcrypt slows brute force significantly — weak passwords are still at risk.
-  • Adding a pepper (Attack 4) stops both attacks entirely.
+  • Weak passwords cracked instantly by dictionary attack.
+  • Brute force is impractical against bcrypt for anything > 4 chars.
+  • Rainbow tables are entirely defeated by bcrypt per-user salts.
+  • Pepper stops dictionary attacks — same weak passwords become
+    uncrackable when the pepper is unknown.
+  • Credential stuffing exploits password reuse at scale.
 ======================================================================

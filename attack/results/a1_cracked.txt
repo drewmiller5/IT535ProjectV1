@@ -1,18 +1,18 @@
 ============================================================
   ATTACK 1 — Dictionary Attack Results
-  Date     : 2026-04-20 18:17:24
+  Date     : 2026-04-26 00:01:45
   Cracked  : 7 / 100
-  Attempts : 10,100
-  Time     : 4.78s
+  Attempts : 18,200
+  Time     : 4.68s
 ============================================================
 
 CRACKED PASSWORDS:
 Username                       Password
 --------------------------------------------------
-williamlee                     abc123
-livgarcia                      abc123
-xander_brennan                 abc123
 kmartin                        qwerty
 sophia_smith                   password
 jim_garcia                     password
 mikey_brown1                   password
+williamlee                     abc123
+livgarcia                      abc123
+xander_brennan                 abc123

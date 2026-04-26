@@ -83,6 +83,9 @@ python attack/a4_pepper_guess.py
 echo "Running Attack 5 — Credential Stuffing"
 python attack/a5_credential_stuffing.py
 
+echo "Running Attack 6 — Pepper Decrypt"
+python attack/a6_pepper_decrypt.py
+
 
 echo "=============================="
 echo " ATTACK PIPELINE COMPLETE"

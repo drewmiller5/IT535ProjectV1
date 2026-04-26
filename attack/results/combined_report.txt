@@ -1,19 +1,19 @@
 ======================================================================
   COMBINED ATTACK REPORT — Dictionary + Brute Force + Rainbow Table + Pepper Guess + Credential Stuffing + Pepper Decrypt
-  Generated : 2026-04-20 18:17:58
+  Generated : 2026-04-26 00:02:27
 ======================================================================
 
 ATTACK SUMMARY
 ----------------------------------------------------------------------
   Attack 1 — Dictionary
     Cracked  : 7 / 100
-    Attempts : 10,100
-    Time     : 4.78s
+    Attempts : 18,200
+    Time     : 4.68s
 
   Attack 2 — Brute Force
     Cracked  : 0 / 93
-    Attempts : 8,796
-    Time     : 48.84s
+    Attempts : 13,972
+    Time     : 39.41s
 
   Attack 3 — Rainbow Table
     Cracked  : 0 / N/A
@@ -22,33 +22,26 @@ ATTACK SUMMARY
 
   Attack 4 — Pepper Guess
     Cracked  : 0 / N/A
-    Attempts : 20
-    Time     : 54.2500s
+    Attempts : 78
+    Time     : 0.2252s
 
   Attack 5 — Credential Stuffing
     Cracked  : 0 / 93
     Attempts : 744
-    Time     : 0.5912s
+    Time     : 0.2121s
 
-  Total Attempts: 0
+  Total Attempts: 513,411
   Total Cracked : 7 unique users
 
 ----------------------------------------------------------------------
-  Date     : 2026-04-20 19:06:54
+  ATTACK 6 — Pepper Decryption + Hybrid Summary
+----------------------------------------------------------------------
+  Date     : 2026-04-26 00:05:02
   Pepper   : 'ch@ng3m3inPr0d!'
   Budget   : 180s  (P1=30s / P2=120s / P3=30s)
   Cracked  : 0 / 93
-  Attempts : 318,339
-  Time     : 158.32s
-  By phase : DICT=0  HYBRID=0  MASK=0
-
-----------------------------------------------------------------------
-  Date     : 2026-04-20 19:00:15
-  Pepper   : 'ch@ng3m3inPr0d!'
-  Budget   : 180s
-  Cracked  : 0 / 93
-  Attempts : 274,071
-  Time     : 180.08s
+  Attempts : 447,237
+  Time     : 154.91s
   By phase : DICT=0  HYBRID=0  MASK=0
 
 ======================================================================

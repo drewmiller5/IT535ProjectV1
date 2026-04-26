@@ -242,13 +242,9 @@ def update_combined(results):
 
     # ── 4. Update Total Attempts (replace old value) ──
     def replace_total_attempts(m):
-        # Recompute: sum of A1 + A2 + A3 attempts recorded in the report
-        a1 = re.search(r"ATTACK 1.*?Attempts\s*:\s*([\d,]+)", report, re.DOTALL)
-        a2 = re.search(r"ATTACK 2.*?Attempts\s*:\s*([\d,]+)", report, re.DOTALL)
-        a1_val = int(a1.group(1).replace(",", "")) if a1 else 0
-        a2_val = int(a2.group(1).replace(",", "")) if a2 else 0
-        new_total = a1_val + a2_val + results["attempts"]
-        return f"  Total Attempts: {new_total:,}"
+        vals = re.findall(r"Attempts\s*[:\|]\s*([\d,]+)", report)
+        total = sum(int(v.replace(",", "")) for v in vals)
+        return f"  Total Attempts: {total:,}"
 
     report = re.sub(r"  Total Attempts: [\d,]+", replace_total_attempts, report)
 

@@ -200,7 +200,7 @@ def build_combined_report():
                         pass
 
                 if re.match(r"Attempts\s*:", line):
-                    attempts = line.split(":", 1)[1].strip()
+                    attempts = re.split(r":\s*", line, maxsplit=1)[1].strip()
 
                 if re.match(r"Time\s*:", line) and "Limit" not in line:
                     elapsed = line.split(":", 1)[1].strip()
@@ -240,7 +240,7 @@ def build_combined_report():
             except ValueError:
                 pass
 
-        f.write(f"  Total Attempts: {total_attempts:,}\n")
+        f.write(f"  Total Attempts: {total_attempts:,}\n")        
         f.write(f"  Total Cracked : {len(all_cracked)} unique users\n\n")
 
         f.write("=" * 70 + "\n")

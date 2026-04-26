@@ -1,6 +1,7 @@
 import bcrypt
 import mysql.connector
 from mysql.connector import Error
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import os
 import re
 import time
@@ -17,6 +18,8 @@ DB_CONFIG = {
 
 SCRIPT_DIR      = os.path.dirname(os.path.abspath(__file__))
 RESULTS_DIR     = os.path.join(SCRIPT_DIR, "results")
+
+MAX_WORKERS = os.cpu_count() or 4
 
 OUTPUT_PATH     = os.path.join(RESULTS_DIR, "a4_cracked.txt")
 A1_RESULTS      = os.path.join(RESULTS_DIR, "a1_cracked.txt")
@@ -118,7 +121,8 @@ def load_already_cracked(*paths):
 
 # -------------------------
 # FETCH USERS
-# Queries encrypted_password — the bcrypt+pepper column
+# Fetches ALL users with encrypted_password
+# Known cracked users are kept as anchors for pepper verification
 # -------------------------
 def fetch_users(skip):
     try:
@@ -128,11 +132,11 @@ def fetch_users(skip):
         cursor.execute("SELECT userid, username, encrypted_password FROM users")
         all_users = cursor.fetchall()
 
-        users = [(u, n, h) for u, n, h in all_users
-                 if n not in skip and h]
+        # Keep ALL users — skip set is used separately in attack loop
+        users = [(u, n, h) for u, n, h in all_users if h]
 
         print(f"Total users: {len(all_users)}")
-        print(f"Attacking  : {len(users)}\n")
+        print(f"Attacking  : {len(users)} (includes known cracked as pepper anchors)\n")
 
         return users
 
@@ -145,6 +149,21 @@ def fetch_users(skip):
         if 'conn'   in locals() and conn.is_connected(): conn.close()
 
 
+
+# -------------------------
+# THREADED BCRYPT HELPER
+# -------------------------
+def _check_chunk(candidate: bytes, chunk: list) -> list:
+    hits = []
+    for _uid, username, stored_hash in chunk:
+        try:
+            if bcrypt.checkpw(candidate, stored_hash):
+                hits.append(username)
+        except Exception:
+            pass
+    return hits
+
+
 # -------------------------
 # ATTACK
 # Outer loop: pepper guesses (cheap — just string concat)
@@ -153,64 +172,64 @@ def fetch_users(skip):
 # We go pepper-outer so we can report clearly which pepper cracked
 # each account — important for the research narrative.
 # -------------------------
-def pepper_guess_attack(users, passwords):
-    cracked       = []   # (username, plaintext, pepper_used)
-    cracked_users = set()
+def pepper_guess_attack(users, passwords, already_cracked, known_pairs):
     total_attempts = 0
     found_pepper   = None
     start          = time.time()
 
-    print(f"Trying {len(PEPPER_GUESSES)} pepper guesses × "
-          f"{len(passwords)} passwords × {len(users)} users\n")
+    # Build lookup of username -> hash for all users
+    hash_lookup = {n: h for _, n, h in users}
+
+    print("=" * 60)
+    print("  PHASE 1 — Pepper Discovery")
+    print(f"  Testing {len(PEPPER_GUESSES)} peppers against {len(known_pairs)} known pairs")
+    print("=" * 60)
 
     for pepper_guess in PEPPER_GUESSES:
-        active = [(u, n, h) for u, n, h in users if n not in cracked_users]
-        if not active:
+        print(f"  Trying pepper: '{pepper_guess}'")
+
+        for username, plaintext in known_pairs.items():
+            if username not in hash_lookup:
+                continue
+
+            stored_hash    = hash_lookup[username]
+            candidate      = (plaintext + pepper_guess).encode("utf-8")
+            total_attempts += 1
+
+            try:
+                if bcrypt.checkpw(candidate, stored_hash.encode("utf-8")):
+                    found_pepper = pepper_guess
+                    print(f"\n  ✅ PEPPER FOUND: '{pepper_guess}'")
+                    print(f"     Confirmed via : {username} → '{plaintext}'")
+                    print(f"     Run A6 to exploit this pepper against all users.\n")
+                    break
+            except Exception:
+                continue
+
+        if found_pepper is not None:
             break
 
-        pepper_label = repr(pepper_guess)
-        print(f"  Trying pepper {pepper_label:<25} against {len(active)} users...")
-
-        pepper_cracked_this_round = 0
-
-        for word in passwords:
-            candidate = (word + pepper_guess).encode("utf-8")
-
-            for uid, username, stored_hash in active:
-                if username in cracked_users:
-                    continue
-
-                total_attempts += 1
-
-                try:
-                    if bcrypt.checkpw(candidate, stored_hash.encode("utf-8")):
-                        cracked.append((username, word, pepper_guess))
-                        cracked_users.add(username)
-                        pepper_cracked_this_round += 1
-                        if found_pepper is None:
-                            found_pepper = pepper_guess
-                        print(f"  [CRACKED] {username:<30} → '{word}'  (pepper: {pepper_label})")
-                except Exception:
-                    continue
-
-        if pepper_cracked_this_round:
-            print(f"            → {pepper_cracked_this_round} cracked with pepper {pepper_label}\n")
-
-    failed  = [n for _, n, _ in users if n not in cracked_users]
     elapsed = time.time() - start
 
-    print(f"\nCracked : {len(cracked)} / {len(users)}")
-    print(f"Failed  : {len(failed)} / {len(users)}")
-    print(f"Attempts: {total_attempts:,}")
-    print(f"Time    : {elapsed:.2f}s\n")
+    if found_pepper is None:
+        print("\n  ❌ Pepper not found in guess list.")
+        print("     Add more pepper candidates to PEPPER_GUESSES and retry.\n")
+
+    print(f"{'=' * 60}")
+    print(f"  RESULTS")
+    print(f"{'=' * 60}")
+    print(f"  Pepper found : {repr(found_pepper) if found_pepper else 'Not found'}")
+    print(f"  Attempts     : {total_attempts:,}")
+    print(f"  Time         : {elapsed:.2f}s")
+    print(f"{'=' * 60}")
 
     return {
-        "cracked":       cracked,
-        "failed":        failed,
-        "attempts":      total_attempts,
-        "time":          elapsed,
-        "total_users":   len(users),
-        "found_pepper":  found_pepper,
+        "cracked":      [],
+        "failed":       [],
+        "attempts":     total_attempts,
+        "time":         elapsed,
+        "total_users":  len(users),
+        "found_pepper": found_pepper,
     }
 
 
@@ -321,7 +340,7 @@ def update_combined(results):
 
     # ── 5. Recompute Total Attempts ──
     def recompute_attempts(_m):
-        vals = re.findall(r"ATTACK \d.*?Attempts\s*[:\|]\s*([\d,]+)", report, re.DOTALL)
+        vals = re.findall(r"Attempts\s*[:\|]\s*([\d,]+)", report)
         total = sum(int(v.replace(",", "")) for v in vals)
         return f"  Total Attempts: {total:,}"
 
@@ -341,10 +360,51 @@ def update_combined(results):
 # -------------------------
 # MAIN
 # -------------------------
+# -------------------------
+# LOAD KNOWN PLAINTEXT PAIRS FROM A1-A3
+# Returns dict of username -> plaintext password
+# -------------------------
+def load_cracked_pairs(*paths) -> dict:
+    pairs = {}
+    for path in paths:
+        if not os.path.exists(path):
+            continue
+        in_cracked_section = False
+        with open(path, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if line.startswith("CRACKED PASSWORDS"):
+                    in_cracked_section = True
+                    continue
+                if not in_cracked_section:
+                    continue
+                if not line or line.startswith(("-", "Username", "=")):
+                    continue
+                parts = line.split()
+                if len(parts) >= 2 and parts[0] not in pairs:
+                    pairs[parts[0]] = parts[1]
+    print(f"  Loaded {len(pairs)} known plaintext pairs from previous attacks:")
+    for u, p in pairs.items():
+        print(f"    {u:<30} → '{p}'")
+    print()
+    return pairs
+
+
+# -------------------------
+# MAIN
+# -------------------------
 if __name__ == "__main__":
-    passwords = load_passwords(WORDLIST_PATH)
-    skip      = load_already_cracked(A1_RESULTS, A2_RESULTS, A3_RESULTS)
-    users     = fetch_users(skip)
-    results   = pepper_guess_attack(users, passwords)
+    passwords    = load_passwords(WORDLIST_PATH)
+    skip         = load_already_cracked(A1_RESULTS, A2_RESULTS, A3_RESULTS)
+    known_pairs  = load_cracked_pairs(A1_RESULTS, A2_RESULTS, A3_RESULTS)
+    users        = fetch_users(skip)
+
+    if not known_pairs:
+        print("❌ No known plaintext passwords — run A1-A3 first.")
+        exit(1)
+
+    results = pepper_guess_attack(users, passwords, skip, known_pairs)
+    print(f"DEBUG — found_pepper : {results['found_pepper']}")
+    print(f"DEBUG — cracked count: {len(results['cracked'])}")
     save_a4(results)
     update_combined(results)

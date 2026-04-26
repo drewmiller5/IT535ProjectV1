@@ -511,9 +511,7 @@ def update_combined(pepper, results):
 
     # ── 5. Recompute Total Attempts ──
     def recompute_attempts(_m):
-        vals = re.findall(
-            r"ATTACK \d.*?Attempts\s*[:\|]\s*([\d,]+)", report, re.DOTALL
-        )
+        vals = re.findall(r"Attempts\s*[:\|]\s*([\d,]+)", report)
         total = sum(int(v.replace(",", "")) for v in vals)
         return f"  Total Attempts: {total:,}"
 

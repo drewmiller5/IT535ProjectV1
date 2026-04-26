@@ -1,13 +1,13 @@
 ============================================================
 ATTACK 6 — Pepper Decryption + Hybrid
-Date       : 2026-04-20 19:06:54
+Date       : 2026-04-26 00:05:02
 Pepper     : 'ch@ng3m3inPr0d!'
-Budget     : 180s  (used 158.3s)
+Budget     : 180s  (used 154.9s)
 Phases     : P1=30s  P2=120s  P3=30s
 Cracked    : 0 / 93
 Failed     : 93 / 93
-Attempts   : 318,339
-Time       : 158.32s
+Attempts   : 447,237
+Time       : 154.91s
 By phase   :
   DICT       : 0
   HYBRID     : 0
